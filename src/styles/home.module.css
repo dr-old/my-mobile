@@ -1,0 +1,33 @@
+@keyframes scrollContent {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scrollContent {
+  animation: scrollContent 10s linear infinite;
+}
+
+.scroll-container {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  transform: translateX(0);
+  transition: transform 10s linear;
+}
+
+.scroll-item {
+  min-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add styles for your images, e.g., max-width, max-height, etc. */
+.scroll-item img {
+  max-width: 100%;
+  max-height: 100px;
+}

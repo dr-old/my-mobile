@@ -1,0 +1,23 @@
+/* SlideContentLoop.module.css */
+.slideContainer {
+  overflow: hidden;
+  height: 200px; /* Set a fixed height for the container */
+}
+
+.slideItem {
+  transition: transform 0.5s ease-in-out; /* Animation duration and easing function */
+  transform: translateY(100%);
+  display: none;
+}
+
+.slideItem.active {
+  display: block;
+  transform: translateY(0);
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+}
