@@ -81,7 +81,7 @@ const cardList = [
   { title: "Card 3", description: "Description for Card 3" },
 ];
 
-export default function Home() {
+export default function Welcome() {
   const router = useRouter();
 
   useEffect(() => {
@@ -96,8 +96,12 @@ export default function Home() {
     <Layout type="gradient">
       <div className="flex flex-col justify-center items-center h-screen">
         <div>
-          <h1 className="text-center text-[35px] font-semibold">Mobile App</h1>
-          <h1 className="text-center text-[18px] font-thin">By Danni Ramdan</h1>
+          <h1 className="text-center text-[35px] text-[#FFE2BE] font-semibold">
+            Mobile<text className="font-thin">App</text>
+          </h1>
+          <h1 className="text-center text-sm font-thin opacity-30">
+            By Danni Ramdan
+          </h1>
         </div>
       </div>
     </Layout>

@@ -13,10 +13,15 @@ import ScrollScaleAnimation from "./scrollScaleAnimation";
 import InputText from "./inputText";
 import Button from "./button";
 import NavHeader from "./navHeader";
+import Card from "./card";
+import InputTextBasic from "./inputTextBasic";
+import InputSelect from "./inputSelect";
+import InputMultiple from "./inputMultiple";
 
 export {
   Button,
   ButtonToggle,
+  Card,
   Footer,
   Header,
   Layout,
@@ -30,5 +35,8 @@ export {
   TypingAnimation,
   ScrollScaleAnimation,
   InputText,
+  InputTextBasic,
+  InputSelect,
+  InputMultiple,
   NavHeader,
 };
