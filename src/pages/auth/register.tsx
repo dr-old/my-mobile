@@ -5,11 +5,13 @@ import "swiper/css/pagination";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function Login() {
+export default function Register() {
   const router = useRouter();
   const [formData, setFormData] = useState({
+    email: "",
     username: "",
     password: "",
+    passwordConfirm: "",
   });
 
   const handleChange = (e: any) => {
@@ -19,16 +21,17 @@ export default function Login() {
     });
   };
 
-  const handleRegister = () => {
-    router.push("/auth/register");
-  };
-
   const handleLogin = () => {
-    router.push("/dash/home");
+    router.push("/auth/login");
   };
 
   const handleValidate = () => {
-    if (formData.username && formData.password) {
+    if (
+      formData.email &&
+      formData.username &&
+      formData.password &&
+      formData.passwordConfirm
+    ) {
       return false;
     }
     return true;
@@ -37,30 +40,43 @@ export default function Login() {
   return (
     <Layout type="gradient">
       <NavHeader onPress={() => console.log(2)} />
-      <h1 className=" ml-5 mt-14 mb-6 text-[24px] font-semibold">Login</h1>
+      <h1 className=" ml-5 mt-14 mb-6 text-[24px] font-semibold">Register</h1>
+      <InputText
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Enter Email"
+      />
       <InputText
         name="username"
         value={formData.username}
         onChange={handleChange}
-        placeholder="Enter Username/Email"
+        placeholder="Create Username"
       />
       <InputText
         type="password"
         name="password"
         value={formData.password}
         onChange={handleChange}
-        placeholder="Enter Password"
+        placeholder="Create Password"
+      />
+      <InputText
+        type="password"
+        name="passwordConfirm"
+        value={formData.passwordConfirm}
+        onChange={handleChange}
+        placeholder="Confirm Password"
       />
       <Button
         disabled={handleValidate()}
         type="gradient"
-        label="Login"
-        onPress={handleLogin}
+        label="Register"
+        onPress={() => console.log(1)}
       />
       <p className="text-center text-[13px] mt-[52px]">
-        No account?{" "}
-        <text onClick={handleRegister} className="text-[#FFE2BE]">
-          Register here
+        Have an account?{" "}
+        <text onClick={handleLogin} className="text-[#FFE2BE]">
+          Login here
         </text>
       </p>
     </Layout>
