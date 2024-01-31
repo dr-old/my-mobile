@@ -8,6 +8,7 @@ import { useAuthStore } from "@/store/auth/authStore";
 import { toast } from "react-toastify";
 import { capitalizeFirstLetter, errorNotif } from "@/utils/helpers";
 import { getCookies } from "cookies-next";
+import { GetServerSideProps } from "next";
 
 export default function Register() {
   const { register } = useAuthStore() as AuthStoreType;
@@ -117,7 +118,11 @@ export default function Register() {
   );
 }
 
-export async function getServerSideProps(req: Request, res: Response) {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  params,
+}) => {
   const cookies = getCookies({ req, res });
 
   // Access cookies using the cookie name
@@ -135,4 +140,4 @@ export async function getServerSideProps(req: Request, res: Response) {
   return {
     props: { token },
   };
-}
+};
