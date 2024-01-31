@@ -38,20 +38,32 @@ export default function About() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<any[]>([]);
 
-  const [formData, setFormData] = useState({
-    name: profile?.name || "",
-    gender: profile?.gender || "",
-    birthday: profile?.birthday || "",
-    horoscope: profile?.horoscope || "",
-    zodiac: profile?.zodiac || "",
-    height: profile?.height || "",
-    weight: profile?.weight || "",
+  const [formData, setFormData] = useState<any>({
+    name: "",
+    gender: "",
+    birthday: new Date(),
+    horoscope: "",
+    zodiac: "",
+    height: "",
+    weight: "",
     edit: false,
   });
 
   useEffect(() => {
     getProfile();
   }, []);
+
+  useEffect(() => {
+    setFormData({
+      name: profile?.name || "",
+      gender: profile?.gender || "",
+      birthday: new Date(profile?.birthday || ""),
+      horoscope: profile?.horoscope || "",
+      zodiac: profile?.zodiac || "",
+      height: profile?.height || "",
+      weight: profile?.weight || "",
+    });
+  }, [profile]);
 
   const handleChange = (e: any) => {
     setFormData({
