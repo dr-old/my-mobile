@@ -53,14 +53,14 @@ export const toBase64 = (file: any) => {
 };
 
 export const resizeImage = async (
-  imageFile: Blob,
+  imageFile: Blob | any,
   maxWidth: number,
   maxHeight: number
-) => {
+): Promise<File> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(imageFile);
-    reader.onload = function (event) {
+    reader.onload = function (event: any) {
       const image = new Image();
       image.src = event.target.result as string;
       image.onload = function () {
@@ -83,16 +83,20 @@ export const resizeImage = async (
         canvas.width = width;
         canvas.height = height;
 
-        const ctx = canvas.getContext("2d");
+        const ctx: any = canvas.getContext("2d");
         ctx.drawImage(image, 0, 0, width, height);
 
         canvas.toBlob((blob) => {
-          resolve(
-            new File([blob], imageFile.name, {
-              type: "image/jpeg",
-              lastModified: Date.now(),
-            })
-          );
+          if (blob) {
+            resolve(
+              new File([blob], imageFile.name, {
+                type: "image/jpeg",
+                lastModified: Date.now(),
+              })
+            );
+          } else {
+            reject(new Error("Failed to resize image."));
+          }
         }, "image/jpeg");
       };
     };

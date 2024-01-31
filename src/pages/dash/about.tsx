@@ -32,14 +32,8 @@ const Detail = ({ label, value }: DetailProps) => {
 };
 
 export default function About() {
-  const {
-    createProfile,
-    updateProfile,
-    getProfile,
-    setProfileImage,
-    profileImage,
-    profile,
-  } = useProfileStore();
+  const { createProfile, updateProfile, getProfile, setProfileImage, profile } =
+    useProfileStore() as ProfileStoreType;
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<any[]>([]);
@@ -47,7 +41,7 @@ export default function About() {
   const [formData, setFormData] = useState({
     name: profile?.name || "",
     gender: profile?.gender || "",
-    birthday: new Date(profile?.birthday) || "",
+    birthday: profile?.birthday || "",
     horoscope: profile?.horoscope || "",
     zodiac: profile?.zodiac || "",
     height: profile?.height || "",
@@ -69,14 +63,14 @@ export default function About() {
   const handleEdit = async () => {
     if (formData.edit) {
       if (profile?.email) {
-        const { data, error } = await updateProfile({
+        const { data, error } = (await updateProfile({
           name: formData.name || profile?.name,
           birthday: moment(formData.birthday || profile?.birthday).format(
             "YYYY-MM-DD"
           ),
           height: parseFloat(formData.height || profile?.height),
           weight: parseFloat(formData.weight || profile?.weight),
-        });
+        })) as unknown as ResponsePayloadType;
         if (error) {
           errorNotif(error);
         }
@@ -96,13 +90,13 @@ export default function About() {
           });
         }
       } else {
-        const { data, error } = await createProfile({
+        const { data, error } = (await createProfile({
           name: formData.name,
           birthday: moment(formData.birthday).format("YYYY-MM-DD"),
           height: parseFloat(formData.height),
           weight: parseFloat(formData.weight),
           interests: [],
-        });
+        })) as unknown as ResponsePayloadType;
         if (error) {
           errorNotif(error);
         }

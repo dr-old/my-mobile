@@ -13,13 +13,12 @@ import { toast } from "react-toastify";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Interest() {
-  const { updateProfile, getProfile, profile } = useProfileStore();
+  const { updateProfile, getProfile, profile } =
+    useProfileStore() as ProfileStoreType;
   const router = useRouter();
   const [interest, setInterest] = useState<string[]>(
     profile?.interests?.length > 0 ? profile?.interests : []
   );
-
-  console.log("profile?.interests", profile?.interests);
 
   const handleSave = async () => {
     console.log("interest", {
@@ -27,10 +26,10 @@ export default function Interest() {
       interests: interest,
     });
 
-    const { data, error } = await updateProfile({
+    const { data, error } = (await updateProfile({
       ...profile,
       interests: interest,
-    });
+    })) as unknown as ResponsePayloadType;
     if (error) {
       errorNotif(error);
     }

@@ -10,7 +10,7 @@ import { capitalizeFirstLetter, errorNotif } from "@/utils/helpers";
 import { getCookies } from "cookies-next";
 
 export default function Register() {
-  const { register } = useAuthStore();
+  const { register } = useAuthStore() as AuthStoreType;
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -36,11 +36,11 @@ export default function Register() {
         position: "top-right",
       });
     } else {
-      const { ok, data, error } = await register({
+      const { ok, data, error } = (await register({
         email: formData.email,
         username: formData.username,
         password: formData.password,
-      });
+      })) as unknown as ResponsePayloadType;
       if (error) {
         errorNotif(error);
       }
@@ -117,7 +117,7 @@ export default function Register() {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps(req: Request, res: Response) {
   const cookies = getCookies({ req, res });
 
   // Access cookies using the cookie name
