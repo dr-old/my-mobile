@@ -5,7 +5,7 @@ export const ProfileAction = (set: any, get: any) => {
   return {
     createProfile: async (params: any) => {
       try {
-        const res = await api.createProfile(params);
+        const res: any = await api.createProfile(params);
         if (res?.ok) {
           if (res?.data?.data?.email) {
             set(
@@ -29,7 +29,7 @@ export const ProfileAction = (set: any, get: any) => {
     },
     updateProfile: async (params: any) => {
       try {
-        const res = await api.updateProfile(params);
+        const res: any = await api.updateProfile(params);
         if (res?.ok) {
           if (res?.data?.data?.email) {
             set(
@@ -53,7 +53,7 @@ export const ProfileAction = (set: any, get: any) => {
     },
     getProfile: async (params: any) => {
       try {
-        const res = await api.getProfile(params);
+        const res: any = await api.getProfile(params);
         if (res?.ok) {
           if (res?.data?.data?.email) {
             set(

@@ -7,7 +7,7 @@ export const AuthAction = (set: any, get: any) => {
   return {
     login: async (params: any) => {
       try {
-        const res = await api.login(params);
+        const res: any = await api.login(params);
         if (res?.ok) {
           if (res?.data?.access_token) {
             set(
@@ -33,19 +33,10 @@ export const AuthAction = (set: any, get: any) => {
         deleteCookie("accessToken");
         return failedResponsePayload(error.message);
       }
-      //    finally {
-      //     useAuthStore.getState().setLoading(false);
-      //   }
     },
     register: async (params: any) => {
       try {
-        const res = await api.register(params);
-        // set(
-        //   produce((state: any) => {
-        //     state.token = "danni";
-        //     state.isLoggedIn = true;
-        //   })
-        // );
+        const res: any = await api.register(params);
         if (res?.ok) {
           return successResponsePayload(res.data);
         } else {

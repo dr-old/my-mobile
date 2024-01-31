@@ -17,8 +17,9 @@ import { getZodiacSign } from "@/utils/helpers";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { profile, profileImage, setProfileImage } = useProfileStore();
-  const { clearSession } = useAuthStore();
+  const { profile, profileImage, setProfileImage } =
+    useProfileStore() as ProfileStoreType;
+  const { clearSession } = useAuthStore() as AuthStoreType;
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
@@ -109,7 +110,7 @@ export default function Home() {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps(req: Request, res: Response) {
   const cookies = getCookies({ req, res });
 
   // Access cookies using the cookie name

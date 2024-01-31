@@ -14,7 +14,7 @@ import {
 import { getCookies } from "cookies-next";
 
 export default function Login() {
-  const { login } = useAuthStore();
+  const { login } = useAuthStore() as AuthStoreType;
   const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
@@ -34,11 +34,11 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    const { data, error } = await login({
+    const { data, error } = (await login({
       email: validateEmail(formData.username) ? formData.username : "",
       username: validateEmail(formData.username) ? "" : formData.username,
       password: formData.password,
-    });
+    })) as unknown as ResponsePayloadType;
     if (error) {
       errorNotif(error);
     }
@@ -94,7 +94,7 @@ export default function Login() {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps(req: Request, res: Response) {
   const cookies = getCookies({ req, res });
 
   // Access cookies using the cookie name

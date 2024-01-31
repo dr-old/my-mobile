@@ -1,7 +1,4 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import { Layout } from "@/components";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import { useRouter } from "next/router";
@@ -12,7 +9,7 @@ import { useAuthStore } from "@/store/auth/authStore";
 
 export default function Welcome() {
   const router = useRouter();
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn } = useAuthStore() as AuthStoreType;
 
   useEffect(() => {
     const fetchSession = async () => {
