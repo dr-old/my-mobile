@@ -9,7 +9,6 @@ import Rating from "./rating";
 import ButtonToggle from "./buttonToggle";
 import { ThemeProvider, useTheme } from "./themeContext";
 import TypingAnimation from "./typingAnimation";
-import ScrollScaleAnimation from "./scrollScaleAnimation";
 import InputText from "./inputText";
 import Button from "./button";
 import NavHeader from "./navHeader";
@@ -33,7 +32,6 @@ export {
   ThemeProvider,
   useTheme,
   TypingAnimation,
-  ScrollScaleAnimation,
   InputText,
   InputTextBasic,
   InputSelect,

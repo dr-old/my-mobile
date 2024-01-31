@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAuthStore } from "@/store/auth/authStore";
 import { toast } from "react-toastify";
-import { capitalizeFirstLetter } from "@/utils/helpers";
+import { capitalizeFirstLetter, errorNotif } from "@/utils/helpers";
 import { getCookies } from "cookies-next";
 
 export default function Register() {
@@ -31,32 +31,31 @@ export default function Register() {
   };
 
   const handleRegister = async () => {
-    console.log("register", formData);
-    const { ok, data, error } = await register({
-      email: formData.email,
-      username: formData.username,
-      password: formData.password,
-    });
-    if (error) {
-      error?.message?.length > 0
-        ? error.message.map((item: any, key: number) => {
-            return toast.error(capitalizeFirstLetter(item), {
-              position: "top-right",
-            });
-          })
-        : null;
-    }
-    if (data) {
-      toast.success(capitalizeFirstLetter(data.message), {
+    if (formData.password !== formData.passwordConfirm) {
+      toast.error("Password is not match", {
         position: "top-right",
       });
-      console.log("data", data);
-      setFormData({
-        email: "",
-        username: "",
-        password: "",
-        passwordConfirm: "",
+    } else {
+      const { ok, data, error } = await register({
+        email: formData.email,
+        username: formData.username,
+        password: formData.password,
       });
+      if (error) {
+        errorNotif(error);
+      }
+      if (data) {
+        toast.success(capitalizeFirstLetter(data.message), {
+          position: "top-right",
+        });
+        console.log("data", data);
+        setFormData({
+          email: "",
+          username: "",
+          password: "",
+          passwordConfirm: "",
+        });
+      }
     }
   };
 
