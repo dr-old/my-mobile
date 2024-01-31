@@ -5,6 +5,8 @@ import { appWithTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import "../config/i18n";
 import { useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -26,6 +28,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
       <Component {...pageProps} />
+      <ToastContainer />
     </ThemeProvider>
   );
 }
