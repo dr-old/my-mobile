@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import About from "./about";
+import { getCookies } from "cookies-next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,4 +52,24 @@ export default function Home() {
       <div className="w-full h-10"></div>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  const cookies = getCookies({ req, res });
+
+  // Access cookies using the cookie name
+  const token = cookies["accessToken"] || null;
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { token },
+  };
 }

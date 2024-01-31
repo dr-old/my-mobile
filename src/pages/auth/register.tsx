@@ -4,8 +4,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useAuthStore } from "@/store/auth/authStore";
+import { toast } from "react-toastify";
+import { capitalizeFirstLetter } from "@/utils/helpers";
+import { getCookies } from "cookies-next";
 
 export default function Register() {
+  const { register } = useAuthStore();
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -23,6 +28,36 @@ export default function Register() {
 
   const handleLogin = () => {
     router.push("/auth/login");
+  };
+
+  const handleRegister = async () => {
+    console.log("register", formData);
+    const { ok, data, error } = await register({
+      email: formData.email,
+      username: formData.username,
+      password: formData.password,
+    });
+    if (error) {
+      error?.message?.length > 0
+        ? error.message.map((item: any, key: number) => {
+            return toast.error(capitalizeFirstLetter(item), {
+              position: "top-right",
+            });
+          })
+        : null;
+    }
+    if (data) {
+      toast.success(capitalizeFirstLetter(data.message), {
+        position: "top-right",
+      });
+      console.log("data", data);
+      setFormData({
+        email: "",
+        username: "",
+        password: "",
+        passwordConfirm: "",
+      });
+    }
   };
 
   const handleValidate = () => {
@@ -71,7 +106,7 @@ export default function Register() {
         disabled={handleValidate()}
         type="gradient"
         label="Register"
-        onPress={() => console.log(1)}
+        onPress={handleRegister}
       />
       <p className="text-center text-[13px] mt-[52px]">
         Have an account?{" "}
@@ -81,4 +116,24 @@ export default function Register() {
       </p>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  const cookies = getCookies({ req, res });
+
+  // Access cookies using the cookie name
+  const token = cookies["accessToken"] || null;
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { token },
+  };
 }

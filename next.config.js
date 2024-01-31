@@ -14,6 +14,9 @@ const nextConfig = {
 
     return config;
   },
+  env: {
+    NEXTAUTH_SECRET: "e4FqrQGxHS89aMjrNwu8864eh8sJU2Ia3Fwz95n0A58=",
+  },
 };
 
 module.exports = nextConfig;

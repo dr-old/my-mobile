@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Interest() {
   const router = useRouter();
-  const [interest, setInterest] = useState([]);
+  const [interest, setInterest] = useState<string[]>([]);
 
   const handleSave = () => {
     console.log();

@@ -4,13 +4,19 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useAuthStore } from "@/store/auth/authStore";
+import { toast } from "react-toastify";
+import { capitalizeFirstLetter, validateEmail } from "@/utils/helpers";
+import { getCookies } from "cookies-next";
 
 export default function Login() {
+  const { login } = useAuthStore();
   const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+  console.log("session", getCookies());
 
   const handleChange = (e: any) => {
     setFormData({
@@ -23,8 +29,31 @@ export default function Login() {
     router.push("/auth/register");
   };
 
-  const handleLogin = () => {
-    router.push("/dash/home");
+  const handleLogin = async () => {
+    const { data, error } = await login({
+      email: validateEmail(formData.username) ? formData.username : "",
+      username: validateEmail(formData.username) ? "" : formData.username,
+      password: formData.password,
+    });
+    if (error) {
+      error?.message?.length > 0
+        ? error.message.map((item: any, key: number) => {
+            return toast.error(capitalizeFirstLetter(item), {
+              position: "top-right",
+            });
+          })
+        : null;
+    }
+    if (data) {
+      toast.success(capitalizeFirstLetter(data.message), {
+        position: "top-right",
+      });
+      setFormData({
+        username: "",
+        password: "",
+      });
+      router.replace("/");
+    }
   };
 
   const handleValidate = () => {
@@ -65,4 +94,24 @@ export default function Login() {
       </p>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  const cookies = getCookies({ req, res });
+
+  // Access cookies using the cookie name
+  const token = cookies["accessToken"] || null;
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { token },
+  };
 }
