@@ -203,7 +203,7 @@ export default function About() {
             type="date"
             label="Birthday:"
             name="birthday"
-            value={formData.birthday}
+            selected={formData.birthday}
             onChange={handleChange}
             placeholder="DD MM YYYY"
           />
