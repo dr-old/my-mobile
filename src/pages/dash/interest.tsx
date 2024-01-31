@@ -6,15 +6,42 @@ import "swiper/css/pagination";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { InputMultiple, Layout, NavHeader } from "@/components";
+import { useProfileStore } from "@/store/profile/profileStore";
+import { capitalizeFirstLetter, errorNotif } from "@/utils/helpers";
+import { toast } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Interest() {
+  const { updateProfile, getProfile, profile } = useProfileStore();
   const router = useRouter();
-  const [interest, setInterest] = useState<string[]>([]);
+  const [interest, setInterest] = useState<string[]>(
+    profile?.interests?.length > 0 ? profile?.interests : []
+  );
 
-  const handleSave = () => {
-    console.log();
+  console.log("profile?.interests", profile?.interests);
+
+  const handleSave = async () => {
+    console.log("interest", {
+      ...profile,
+      interests: interest,
+    });
+
+    const { data, error } = await updateProfile({
+      ...profile,
+      interests: interest,
+    });
+    if (error) {
+      errorNotif(error);
+    }
+    if (data) {
+      toast.success(capitalizeFirstLetter(data.message), {
+        position: "top-right",
+      });
+      setInterest([]);
+      getProfile();
+      // router.back();
+    }
   };
 
   return (

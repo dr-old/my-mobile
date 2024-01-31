@@ -6,7 +6,11 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAuthStore } from "@/store/auth/authStore";
 import { toast } from "react-toastify";
-import { capitalizeFirstLetter, validateEmail } from "@/utils/helpers";
+import {
+  capitalizeFirstLetter,
+  errorNotif,
+  validateEmail,
+} from "@/utils/helpers";
 import { getCookies } from "cookies-next";
 
 export default function Login() {
@@ -36,13 +40,7 @@ export default function Login() {
       password: formData.password,
     });
     if (error) {
-      error?.message?.length > 0
-        ? error.message.map((item: any, key: number) => {
-            return toast.error(capitalizeFirstLetter(item), {
-              position: "top-right",
-            });
-          })
-        : null;
+      errorNotif(error);
     }
     if (data) {
       toast.success(capitalizeFirstLetter(data.message), {

@@ -25,7 +25,7 @@ export default function Welcome() {
 
     const timeout = setTimeout(() => {
       fetchSession();
-    }, 2000);
+    }, 4000);
 
     return () => clearTimeout(timeout); // Cleanup timeout on unmount
   }, [router]);
@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   if (!token) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/auth/login",
         permanent: true,
       },
     };
