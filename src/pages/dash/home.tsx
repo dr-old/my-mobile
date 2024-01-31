@@ -49,7 +49,7 @@ export default function Home() {
     <Layout>
       <NavHeader
         onPress={() => router.back()}
-        labelMid={profile?.username ? `@${profile?.username}` : null}
+        labelMid={profile?.username ? `@${profile?.username}` : undefined}
         iconEnd={
           <ArrowLeftEndOnRectangleIcon
             onClick={handleLogout}

@@ -47,7 +47,7 @@ export default function About() {
   const [formData, setFormData] = useState({
     name: profile?.name || "",
     gender: profile?.gender || "",
-    birthday: new Date(profile?.birthday) || "",
+    birthday: profile?.birthday || "",
     horoscope: profile?.horoscope || "",
     zodiac: profile?.zodiac || "",
     height: profile?.height || "",

@@ -27,8 +27,7 @@ const InputTextBasic: React.FC<InputTextProps> = ({
       <div className="rounded-lg flex flex-row justify-end w-2/3 border-[1px] border-white/[0.22] bg-white/[0.06]">
         {type === "date" ? (
           <DatePicker
-            disbled={disabled}
-            selected={value}
+            selected={new Date(value)}
             onChange={(date: any) =>
               onChange({ target: { name, value: date } })
             }
