@@ -12,6 +12,7 @@ import {
   validateEmail,
 } from "@/utils/helpers";
 import { getCookies } from "cookies-next";
+import { GetServerSideProps } from "next";
 
 export default function Login() {
   const { login } = useAuthStore() as AuthStoreType;
@@ -94,7 +95,11 @@ export default function Login() {
   );
 }
 
-export async function getServerSideProps(req: Request, res: Response) {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  params,
+}) => {
   const cookies = getCookies({ req, res });
 
   // Access cookies using the cookie name
@@ -112,4 +117,4 @@ export async function getServerSideProps(req: Request, res: Response) {
   return {
     props: { token },
   };
-}
+};

@@ -13,6 +13,7 @@ import { useAuthStore } from "@/store/auth/authStore";
 import { useProfileStore } from "@/store/profile/profileStore";
 import moment from "moment";
 import { getZodiacSign } from "@/utils/helpers";
+import { GetServerSideProps } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -110,7 +111,11 @@ export default function Home() {
   );
 }
 
-export async function getServerSideProps(req: Request, res: Response) {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  params,
+}) => {
   const cookies = getCookies({ req, res });
 
   // Access cookies using the cookie name
@@ -128,4 +133,4 @@ export async function getServerSideProps(req: Request, res: Response) {
   return {
     props: { token },
   };
-}
+};
